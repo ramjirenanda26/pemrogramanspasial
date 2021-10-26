@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+    <nav>
+        <div class="wrapper">
+            <div class="logo"><a href =''>Petakita</a></div>
+            <div class="menu">
+                <ul>
+                    <li><a href= "#home">Home</a></li>
+                    <li><a href= "#petapenggunaanlahan">Peta Tutupan Lahan</a></li>
+                    <li><a href="#Contact">Contact</a></li>
+                    <li><a href="" class="tbl-kuning">Sign Up</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <!--untuk home-->
+        <section id="home">
+            <img src="https://image.freepik.com/free-vector/map-icon-set_37732-292.jpg"/>
+            <div class="kolom">
+                <p class= "deskripsi">Ayo buka Petamu!</p>
+                <h2>WEBGIS Tutupan Lahan Yogyakarta</h2>
+                <p>Kenali daerahmu!</p>
+                <p><a href="" class="tbl-pink">Explore lebih lanjut!</a></p>
+            </div>
+        </section>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web GIS Tutupan Lahan </title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="leaflet.ajax.js"></script>
+    <link rel="stylesheet" href="style.css">
+<style>
+    #maps{
+        height: 570px;
+    }
+</style>
+</head>
+
+<body>
+    <div id="maps"></div>
+    
+<script>
+    var mymap = L.map('maps').setView([-7.866578620962378, 110.44448798002105], 10);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+    }).addTo(mymap);
+
+    var style = {
+        "color" : "red",
+        "weight" : "3"
+    }
+
+    function popUp(f,l){
+        var out = [];
+        if (f.properties){
+          for(key in f.properties){
+                out.push(key+": "+"<b>"+f.properties[key]+"</b>");
+            }
+            l.bindPopup(out.join("<br />"));
+        }
+    }
+    var jsonTest = new L.GeoJSON.AJAX(["tuplah.geojson"],{onEachFeature:popUp, style}).addTo(mymap);
+</script>
+
+</body>
+
+</html>
